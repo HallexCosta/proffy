@@ -1,25 +1,31 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
 import * as auth from '../services/auth'
-
+ 
 import api from '../services/api'
 
+import { SignInUserData, Response, ResponseError } from '../services/auth'
+
 interface User {
-  name: string,
+  name: string
   email: string
+  photo: string
 }
 
 interface AuthContextData {
   signed: boolean
-  user: User | null,
+  user: User | null
   loading: boolean
-  signIn(): Promise<void>
+  signIn(user: SignInUserData): Promise<void>
   signOut(): void
+  remember: Boolean
+  rememberAccount(): void
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<User | null>(null)
+  const [remember, setRemember] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -41,15 +47,25 @@ export const AuthProvider: React.FC = ({ children }) => {
     loadStorageData()
   }, [])
 
-  async function signIn() {
-    const response = await auth.signIn()
+  function rememberAccount() {
+    setRemember(!remember)
+  }
+
+  async function signIn(user: SignInUserData) {
+    const response: Response | ResponseError  = await auth.signIn(user)
+
+    if ('message' in response) {
+      return alert('Email or password invalid!')
+    }
 
     setUser(response.user)
 
     api.defaults.headers.Authorization = `Bearer ${response.token}`
 
-    localStorage.setItem('@ProffyAuth:user', JSON.stringify(response.user))
-    localStorage.setItem('@ProffyAuth:token', response.token)
+    if (remember) {
+      localStorage.setItem('@ProffyAuth:user', JSON.stringify(response.user))
+      localStorage.setItem('@ProffyAuth:token', response.token)
+    }      
   }
 
   function signOut() {
@@ -59,7 +75,18 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ signed: !!user, loading, user: user, signIn, signOut}}>
+    <AuthContext.Provider
+      value={
+        {
+          signed: !!user,
+          loading,
+          user,
+          signIn,
+          signOut,
+          remember,
+          rememberAccount
+        }
+      }>
       {children}
     </AuthContext.Provider>
   )
