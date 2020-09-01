@@ -1,16 +1,14 @@
 import React, { useState, FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import {
   Container,
   Header,
   SignUpContainer,
   SignUpContent,
-  ShowPasswordButton,
   Input,
   Title,
   Description,
-  SignUpButton,
   ProffyContainer,
   ProffyContent
 } from './styles'
@@ -20,19 +18,41 @@ import showPasswordIcon from '../../assets/images/icons/show-password.svg'
 import hidePasswordIcon from '../../assets/images/icons/hide-password.svg'
 import logo from '../../assets/images/logo.svg'
 
+import api from '../../services/api'
+
+import SignUpButton from '../../components/Button'
+
 const SignUp: React.FC = () => {
+  const history = useHistory()
+
+  const [name, setName] = useState('')
+  const [lastname, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
   const [showPassword, setShowPassword] = useState(false)
 
   function handleShowAndHidePassword() {
     setShowPassword(!showPassword)
   }
 
-  function handleSignUp(e: FormEvent) {
+  async function handleSignUp(e: FormEvent) {
     e.preventDefault() 
-    
-    console.log('> SignUp')
-  }
 
+    try {
+      await api.post('users', {
+        name,
+        lastname,
+        email,
+        password
+      })
+    } catch(e) {
+      return alert(e)
+    }
+
+    history.push('/concluded-signup')
+  }
+  
   return (
     <Container>
       <Header>
@@ -45,23 +65,49 @@ const SignUp: React.FC = () => {
           <Description>Preencha os dados abaixo para começar.</Description>
 
           <form onSubmit={(e) => handleSignUp(e)}>
-            <Input id="name" placeholder="Nome" />
-            <Input id="lastname" placeholder="Sobrenome" />
-            <Input id="email" placeholder="E-mail" />
+            <Input
+              type="text"
+              id="name"
+              placeholder="Nome"
+              onChange={e => setName(e.target.value)}
+            />
+            <Input
+              type="text"
+              id="lastname"
+              placeholder="Sobrenome"
+              onChange={e => setLastName(e.target.value)}
+            />
+            <Input
+              type="text"
+              id="email"
+              placeholder="E-mail"
+              onChange={e => setEmail(e.target.value)}
+              />
           
-            <Input type={showPassword ? 'text' : 'password'} id="password" placeholder="Password" />
-            <ShowPasswordButton onClick={handleShowAndHidePassword}>
-              <img src={showPassword ? hidePasswordIcon : showPasswordIcon } alt="Show Password"/>
-            </ShowPasswordButton>
+            <Input
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              placeholder="Senha"
+              onChange={e => setPassword(e.target.value)}
+            />
+            <img 
+              onClick={handleShowAndHidePassword}
+              src={showPassword ? hidePasswordIcon : showPasswordIcon }
+              alt="Show Password"
+            />
 
-            <SignUpButton>Concluir cadastro</SignUpButton>
+            <SignUpButton
+              active={name && lastname && email && password ? true : false}
+            >
+              Concluir cadastro
+            </SignUpButton>
           </form>
         </SignUpContent>
       </SignUpContainer>
 
       <ProffyContainer>
         <ProffyContent>
-            <img src={logo} alt="Logo" />
+          <img src={logo} alt="Logo" />
           <h2>Sua plataforma de estudos online</h2>
         </ProffyContent>
       </ProffyContainer>

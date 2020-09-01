@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import successBg from '../../assets/images/success-background.svg'
 
-// HD
+// HD - Header
 // PL - Proffy Logo
 // SF - SignUp Form
 
@@ -42,23 +42,27 @@ export const SignUpContent = styled.article`
     padding: 0;
   }
 
-  /* > form img {
-    margin-top: 1.5rem;
+  > form input {
+    width: 100%;
+    height: 5.6rem;
+    border-radius: 0.8rem;
+    border: 1px solid var(--color-line-in-white);
+    outline: 0;
+    padding: 0 1.6rem;
+    font: 1.6rem Archivo;
+  }
+  
+  > form input + img {
     position: absolute;
-    left: 34%;
+    margin-top: 1.6rem;
+    right: 10%;
 
     cursor: pointer;
-  } */
-`
+  }
 
-export const InputBlock = styled.div`
-`
-export const ShowPasswordButton = styled.button`
-  position: absolute;
-  border: 0;
-
-  left: 32rem;
-  bottom: 10.5rem;
+  > form button {
+    margin-top: 4rem;
+  }
 `
 
 export const Input = styled.input`
@@ -69,7 +73,8 @@ export const Input = styled.input`
   border: 1px solid var(--color-line-in-white);
   outline: 0;
   padding: 0 1.6rem;
-  font: 1.6rem Archivo;
+  line-height: 2.4rem;
+  font: 1.6rem Poppins;
 
   &:first-child {
     margin-top: 5.3rem;
@@ -85,19 +90,6 @@ export const Title = styled.legend`
 `
 
 export const Description = styled.h2``
-
-export const SignUpButton = styled.button`
-  width: 35.2rem;
-  height: 5.6rem;
-
-  margin-top: 4rem;
-
-  color: var(--color-box-base);
-  background: var(--color-secundary);
-
-  border: 0;
-  border-radius: .8rem;
-`
 
 export const ProffyContainer = styled.div`
   grid-area: PL;
