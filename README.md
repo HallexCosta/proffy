@@ -33,8 +33,6 @@
 
 # :book: Sobre
 
-  
-
 ><<&nbsp; O **Proffy** é uma plataforma para melhorar a comunicação entre alunos e professores(proffys). Na plataforma você pode ser um professor podendo colocar a sua biografia, contato, sua melhor foto e dar aulas sobre o que você mais conhece. Se você é um estudante você pode filtrar os professores pela matéria, hora, dia e encontrar vários professores para ensinar você.
 
   
