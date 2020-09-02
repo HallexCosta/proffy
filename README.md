@@ -189,123 +189,64 @@
 
 ## :video_game: Como executar a aplicação
 
-  
-
 ```sh
 
 # Instalação do projeto.
-
-  
-
 $ mkdir proffy &&  cd proffy
 
-  
 
 # Inicializando um projeto.
-
-  
-
 $ git init
 
-  
 
 # Clonando o projeto
-
-  
-
 $ git clone git pull https://github.com/HallanCosta/proffy.git .
 
   
-
-  
-
 # API
-
-  
-
 $ cd server
 
   
-
 # Instale as dependências do projeto.
-
-  
-
 $ yarn install # ou npm install
-
   
 
 # Crie o banco de dados e configure a as tabelas.
-
-  
-
 $ yarn knex:migrate # ou npm run knex:migrate
-
   
 
 # Inicie a API
+$ yarn start # ou npm start  
 
-  
-
-$ yarn start # ou npm start
-
-  
-
-  
 
 # Aplicação web
-
-  
-
 $ cd web
-
   
 
 # Instalando as dependências do projeto.
-
-  
-
 $ yarn # ou npm install
-
   
 
 # Inicie a aplicação web
-
-  
-
 $ yarn start # ou npm start
-
-  
-
   
 
 # Aplicação mobile
-
-  
-
 $ cd mobile
-
   
 
 # Instalando as dependências do projeto.
-
-  
-
 $ yarn # ou npm install
-
   
 
 # Inicie a aplicação mobile
-
-  
-
 $ yarn start # ou npm start
 
 ```  
 
 ## :memo: Licença
 
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](https://github.com/HigorSnt/proffy/blob/master/LICENSE.md) para mais detalhes.  
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](https://github.com/HallexCosta/proffy/blob/master/LICENSE) para mais detalhes.  
 
 ## :computer: Desenvolvimento
 
