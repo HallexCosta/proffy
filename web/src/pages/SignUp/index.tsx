@@ -1,5 +1,6 @@
 import React, { useState, FormEvent } from 'react'
 import { Link, useHistory } from 'react-router-dom'
+import { AxiosError } from 'axios'
 
 import {
   Container,
@@ -46,11 +47,13 @@ const SignUp: React.FC = () => {
         email,
         password
       })
-    } catch(e) {
-      return alert(e)
-    }
 
-    history.push('/concluded-signup')
+      history.push('/concluded-signup')
+    } catch(error) {
+      const axiosError = error as AxiosError  
+
+      return alert(axiosError.response?.data.message)
+    }    
   }
   
   return (
@@ -78,7 +81,7 @@ const SignUp: React.FC = () => {
               onChange={e => setLastName(e.target.value)}
             />
             <Input
-              type="text"
+              type="email"
               id="email"
               placeholder="E-mail"
               onChange={e => setEmail(e.target.value)}
