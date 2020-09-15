@@ -1,11 +1,11 @@
 import api from '../services/api'
 
-export interface SignInUserData {
+export type SignInUserData = {
   email: string
   password: string
 }
 
-export interface Response {
+export type Response = {
   token: string
   user: {
     name: string,
@@ -14,16 +14,8 @@ export interface Response {
   }
 }
 
-export interface ResponseError {
-  message: string
-}
-
 export async function signIn(user: SignInUserData): Promise<Response> {
-  try {
-    const response = await api.post('auth', user)
+  const response = await api.post('auth', user)
 
-    return response.data 
-  } catch(error) {
-    return error
-  }
+  return response.data 
 }
