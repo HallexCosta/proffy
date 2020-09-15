@@ -3,9 +3,9 @@ import * as auth from '../services/auth'
  
 import api from '../services/api'
 
-import { SignInUserData, Response, ResponseError } from '../services/auth'
+import { SignInUserData, Response } from '../services/auth'
 
-interface User {
+type User = {
   name: string
   email: string
   photo: string
@@ -52,20 +52,21 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
 
   async function signIn(user: SignInUserData) {
-    const response: Response | ResponseError  = await auth.signIn(user)
+    try {
+      const response: Response  = await auth.signIn(user)
 
-    if ('message' in response) {
+      setUser(response.user)
+
+      api.defaults.headers.Authorization = `Bearer ${response.token}`
+
+      if (remember) {
+        localStorage.setItem('@ProffyAuth:user', JSON.stringify(response.user))
+        localStorage.setItem('@ProffyAuth:token', response.token)
+      } 
+    } catch(e) {
       return alert('Email or password invalid!')
     }
-
-    setUser(response.user)
-
-    api.defaults.headers.Authorization = `Bearer ${response.token}`
-
-    if (remember) {
-      localStorage.setItem('@ProffyAuth:user', JSON.stringify(response.user))
-      localStorage.setItem('@ProffyAuth:token', response.token)
-    }      
+         
   }
 
   function signOut() {
