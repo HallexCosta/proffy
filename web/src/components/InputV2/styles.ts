@@ -10,6 +10,7 @@ export const InputBlock = styled.div<Props>`
   }
   
   > label {
+    cursor: default;
     font-size: ${props => props.actived ? '1.2rem' : '1.4rem'};
     padding: ${props => props.actived ? '1.6rem' : ' 0 0 0 1.6rem'};
   }

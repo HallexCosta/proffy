@@ -1,7 +1,5 @@
 import React, { InputHTMLAttributes } from 'react'
 
-import './styles.css'
-
 import { InputBlock, Label, HTMLInput } from './styles'
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
