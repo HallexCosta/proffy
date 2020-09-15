@@ -1,20 +1,40 @@
-import express, { Router} from 'express'
+import { Router, Request, Response } from 'express'
 
 import ClassesController from './controllers/ClassesController'
 import ConnectionsController from './controllers/ConnectionsController'
-import AccountsController from './controllers/AccountsController'
+import UsersController from './controllers/UsersController'
 import AuthentificationController from './controllers/AuthentificationController'
 import AuthMiddleware from './middlewares/auth'
 
-const routes: Router = express.Router()
+import { createUserController } from './useCases/CreateUser'
+import { forgotPasswordController } from './useCases/ForgotPassword'
+import { validateRecoveryController } from './useCases/ValidateRecovery'
+import { resetPasswordController } from './useCases/ResetPassword'
+
+const routes: Router = Router()
 
 const classesController = new ClassesController
 const connectionsController = new ConnectionsController
-const accountsController = new AccountsController
+const usersController = new UsersController
 const authentificationController = new AuthentificationController
 const authMiddleware = new AuthMiddleware
 
-routes.post('/users', accountsController.validateAccount, accountsController.create)
+// routes.post('/users', usersController.validateAccount, usersController.create)
+routes.post('/users', (request: Request, response: Response) => {
+  return createUserController.handle(request, response)
+})
+
+routes.post('/forgot_password', (request: Request, response: Response) => {
+  return forgotPasswordController.handle(request, response)
+})
+
+routes.post('/validate_recovery', (request: Request, response: Response) => {
+  return validateRecoveryController.handle(request, response)
+})
+
+routes.post('/reset_password', (request: Request, response: Response) => {
+  return resetPasswordController.handle(request, response)
+})
 
 routes.post('/auth', authentificationController.findUserByEmailAndPassword)
 routes.use(authMiddleware.auth);
