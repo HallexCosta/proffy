@@ -116,20 +116,32 @@ export const PhotoContainer = styled.div`
   }
 `
 
-export const CameraIcon = styled(Camera)`
+export const CameraIconContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   position: absolute;
-  bottom: 0;
-  right: -15%;
+  width: 4.8rem;
+  height: 4.8rem;
 
-  width: 6rem;
-  height: 6rem;
+  padding: 1.6rem;
 
-  color: var(--color-secundary-dark);
-  background-color: var(--color-white);
+  background-color: var(--color-secundary-dark);
+
+  bottom: 5%;
+  right: 0;
 
   border-radius: 50%;
-  
-  padding: 10px;
+`
+
+export const CameraIcon = styled(Camera)`
+  position: absolute;
+
+  width: 2.4rem;
+  height: 2.4rem;
+
+  color: var(--color-white);
 `
 
 export const FormContainer = styled.div`
