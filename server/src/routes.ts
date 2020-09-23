@@ -10,6 +10,7 @@ import { createUserController } from './useCases/CreateUser'
 import { forgotPasswordController } from './useCases/ForgotPassword'
 import { validateRecoveryController } from './useCases/ValidateRecovery'
 import { resetPasswordController } from './useCases/ResetPassword'
+import { authenticateController } from './useCases/AuthenticateUseCase'
 
 const routes: Router = Router()
 
@@ -36,7 +37,9 @@ routes.post('/reset_password', (request: Request, response: Response) => {
   return resetPasswordController.handle(request, response)
 })
 
-routes.post('/auth', authentificationController.findUserByEmailAndPassword)
+routes.post('/auth', (request: Request, response: Response) => {
+  return authenticateController.handle(request, response)
+})
 routes.use(authMiddleware.auth);
 
 routes.get('/classes', classesController.index)
