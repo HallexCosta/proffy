@@ -15,10 +15,11 @@ export default class Authentification {
     } 
 
     try {
-      const { id } = await promisify(jwt.verify)(authorization, "secret") as JWTDecoded
+      const { id } = await promisify(jwt.verify)(authorization, "secret") as JWTDecoded;
+      
+      request.body.id = id;
 
-      next()
-      return response.status(200).json({ id })
+      return next();
     } catch (err) {
       return response.status(401).json({ message: "Token invalid" })
     }
