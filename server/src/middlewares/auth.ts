@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import jwt from 'jsonwebtoken'
+import jwt, { SigningKeyCallback } from 'jsonwebtoken'
 import { promisify } from 'util'
 
 interface JWTDecoded {
@@ -15,9 +15,8 @@ export default class Authentification {
     } 
 
     try {
-      const { id } = await promisify(jwt.verify)(authorization, "secret") as JWTDecoded;
-      
-      request.body.id = id;
+      const verify = await promisify(jwt.verify) as SigningKeyCallback
+      await verify(authorization, "secret") ;
 
       return next();
     } catch (err) {
