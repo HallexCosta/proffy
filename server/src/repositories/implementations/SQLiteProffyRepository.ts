@@ -1,11 +1,19 @@
 import { Proffy } from '../../entities/Proffy'
 import { IProffysRepository } from '../IProffysRepository'
 
-import db from '../../database/connection'
+import Knex from 'knex'
 
 export class SQLiteProffyRepository implements IProffysRepository {
+  constructor(
+    private db: Knex | Knex.Transaction
+  ) {}
+
+  async setDb(transaction: Knex.Transaction) {
+    this.db = transaction
+  }
+
   async save(proffy: Proffy): Promise<void> {
-    await db('proffys')
+    await this.db('proffys')
       .insert(proffy)
   }
 }
