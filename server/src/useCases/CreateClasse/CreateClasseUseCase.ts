@@ -20,9 +20,9 @@ export class CreateClasseUseCase {
   async execute(data: TProffyRequestDTO): Promise<void> {
     const trx = await db.transaction()
 
-    await this.proffyRepository.setDb(trx)
-    await this.classeRepository.setDb(trx)
-    await this.classSchedule.setDb(trx)
+    await this.proffyRepository.setTransaction(trx)
+    await this.classeRepository.setTransaction(trx)
+    await this.classSchedule.setTransaction(trx)
 
     try {
       const proffy: Proffy = new Proffy({
