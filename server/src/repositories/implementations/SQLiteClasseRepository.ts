@@ -12,7 +12,7 @@ export class SQLiteClasseRepository implements IClassesRepository {
     this.db = db
   }
 
-  async setDb(transaction: Knex.Transaction) {
+  async setTransaction(transaction: Knex.Transaction) {
     this.db = transaction
   }
 

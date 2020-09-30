@@ -7,12 +7,12 @@ import Knex from 'knex'
 
 export class SQLiteProffyRepository implements IProffysRepository {
   private db: Knex | Knex.Transaction
-  
+
   constructor() {
     this.db = db
   }
 
-  async setDb(transaction: Knex.Transaction) {
+  async setTransaction(transaction: Knex.Transaction) {
     this.db = transaction
   }
 
