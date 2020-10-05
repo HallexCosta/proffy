@@ -16,12 +16,9 @@ export class SQLiteProffyRepository implements IProffysRepository {
     this.db = transaction
   }
 
-  async findByIds(ids: string[]): Promise<Proffy[]> {
+  async all(): Promise<Proffy[]> {
     const proffys: Proffy[] = await this.db('proffys')
       .select('*')
-      .where(ids)
-
-    console.log('All Proffys', proffys)
 
     return proffys
   }

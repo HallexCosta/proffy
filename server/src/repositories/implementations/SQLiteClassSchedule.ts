@@ -16,31 +16,14 @@ export class SQLiteClassSchedule implements IClassScheduleRepository {
     this.db = transaction
   }
 
-  async findByWeekDay(week_day: number): Promise<ClassSchedule[]> {
+  async all(): Promise<ClassSchedule[]> {
     const classSchedule = this.db('class_schedule')
       .select('*')
-      .where('week_day', '=', week_day)
 
     return classSchedule
   }
 
-  async findByFrom(from: number): Promise<ClassSchedule[]> {
-    const classSchedule = this.db('class_schedule')
-      .select('*')
-      .where('from', '=', from)
-
-    return classSchedule
-  }
-  
-  async findByTo(to: number): Promise<ClassSchedule[]> {
-    const classSchedule = this.db('class_schedule')
-      .select('*')
-      .where('to', '=', to)
-
-    return classSchedule
-  }
-
-  async save(classSchedule: ClassSchedule): Promise<void> {
+  async save(classSchedule: ClassSchedule[]): Promise<void> {
     await this.db('class_schedule')
       .insert(classSchedule)
   }

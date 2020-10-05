@@ -25,6 +25,8 @@ export class SQLiteClasseRepository implements IClassesRepository {
   }
 
   async save(classe: Classe): Promise<void> {
+    console.log(classe)
+
     await this.db('classes')
       .insert(classe)
   }
