@@ -42,18 +42,17 @@ export class CreateClasseUseCase {
 
       await this.classeRepository.save(classe)
       
-      const [classScheduleMap] = data.schedule.map((scheduleItem: TScheduleItem)=> {
-        return {
+      const classSchedules = data.schedule.map((scheduleItem: TScheduleItem)=> {
+        const classSchedule = new ClassSchedule({
           class_id: classe.id,
           week_day: scheduleItem.week_day,
           from: convertHourToMinute(scheduleItem.from),
           to: convertHourToMinute(scheduleItem.to)
-        }
+        })
+        return classSchedule
       })
 
-      const classSchedule = new ClassSchedule(classScheduleMap)
-
-      await this.classSchedule.save(classSchedule)
+      await this.classSchedule.save(classSchedules)
 
       await trx.commit()
     } catch (error) {
