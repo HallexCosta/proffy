@@ -16,7 +16,7 @@ export class AuthenticateController {
         password
       })
 
-      return response.status(200).send(authenticatedUser)
+      return response.status(200).json(authenticatedUser)
     } catch (e) {
       return response.status(400).json({
         message: e.message || 'Unexpected error.'
