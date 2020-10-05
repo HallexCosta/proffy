@@ -9,7 +9,7 @@ interface ScheduleItem {
     to: string
 }
 
-interface User {
+interface Proffy {
     name: string
     avatar: string
     whatsapp: string
@@ -39,15 +39,15 @@ export default class ClassesController {
             .whereExists(function () {
                 this.select('class_schedule.*')
                     .from('class_schedule')
-                    .whereRaw('`class_schedule`.`class_id` = `classes`.`id`')
-                    .whereRaw('`class_schedule`.`week_day` = ??', [Number(week_day)])
-                    .whereRaw('`class_schedule`.`from` <= ??', [Number(timeInMinutes)])
-                    .whereRaw('`class_schedule`.`to` > ??', [Number(timeInMinutes)])
+                    // .whereRaw('`class_schedule`.`class_id` = `classes`.`id`')
+                    // .whereRaw('`class_schedule`.`week_day` = ??', [Number(week_day)])
+                    // .whereRaw('`class_schedule`.`from` <= ??', [Number(timeInMinutes)])
+                    // .whereRaw('`class_schedule`.`to` > ??', [Number(timeInMinutes)])
             })
-            .where('classes.subject', '=', subject)
-            .join('users', 'classes.user_id', '=', 'users.id')
-            .select(['classes.*', 'users.*'])
-
+            // .where('classes.subject', '=', subject)
+            // .join('proffys', 'classes.proffy_id', '=', 'proffys.id')
+            .select(['classes.*', 'proffys.*'])
+            
         return response.json(classes)
     }
 
@@ -60,19 +60,19 @@ export default class ClassesController {
             subject,
             cost,
             schedule
-        }: User = request.body
+        }: Proffy = request.body
     
         const trx = await db.transaction()
     
         try {
-            const insertedUsersIds = await trx('users').insert({
+            const insertedProffysIds = await trx('proffys').insert({
                 name,
                 avatar,
                 whatsapp,
                 bio
             })
     
-            const user_id = insertedUsersIds[0]
+            const user_id = insertedProffysIds[0]
     
             const insertedClassesIds = await trx('classes').insert({
                 subject,

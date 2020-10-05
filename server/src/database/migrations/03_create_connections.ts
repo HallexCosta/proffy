@@ -2,18 +2,16 @@ import Knex from 'knex'
 
 export async function up(knex: Knex) {
     return knex.schema.createTable('connections', table => {
-        table.increments('id').primary()
+        table.string('id').unique().notNullable()
 
-        table.integer('user_id')
+        table.integer('proffy_id')
             .notNullable()
             .references('id')
-            .inTable('users')
+            .inTable('proffys')
             .onUpdate('CASCADE')
             .onDelete('CASCADE')
 
-        table.timestamp('created_at')
-            .defaultTo(knex.raw('CURRENT_TIMESTAMP'))
-            .notNullable
+        table.string('created_at').notNullable()
 
     })
 }

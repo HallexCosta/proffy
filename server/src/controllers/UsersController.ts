@@ -4,14 +4,14 @@ import bcrypt from 'bcrypt'
 
 import db from '../database/connection'
 
-interface RequestAccount {
+interface RequestUser {
   name: string
   lastname: string
   email: string
   password: string
 }
 
-export default class AccountsController {
+export default class UsersController {
   get validateAccount() {
     return celebrate({
       body: Joi.object().keys({
@@ -29,14 +29,14 @@ export default class AccountsController {
       lastname,
       email,
       password
-    }: RequestAccount = request.body
+    }: RequestUser = request.body
 
     const cryptPassword = await bcrypt.hash(password, 8)
     
     const photo = `https://ui-avatars.com/api/?name=${name}+${lastname}`
 
     try {
-      await db('accounts')
+      await db('users')
         .insert({
           name,
           lastname,

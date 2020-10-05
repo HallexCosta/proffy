@@ -31,7 +31,7 @@ export class CreateClasseUseCase {
         whatsapp: data.whatsapp,
         bio: data.bio
       })
-      
+      console.log(proffy)
       await this.proffyRepository.save(proffy)
 
       const classe: Classe = new Classe({

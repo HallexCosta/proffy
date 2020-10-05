@@ -33,7 +33,7 @@ export default class AuthetificationController {
       password
     }: RequestUser = request.body
     
-    const user: User = await db('accounts')
+    const user: User = await db('users')
       .select('*')
       .where('email', '=', email)
       .first()
@@ -42,7 +42,7 @@ export default class AuthetificationController {
       return response
       .status(401)
       .send({
-        error: 'Incorrect email.'
+        message: 'Incorrect email.'
       })
     }
 
